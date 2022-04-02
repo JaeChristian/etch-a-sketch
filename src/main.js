@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
 import Board from "./components/board";
-import {useState} from "react";
+import {useState, useRef} from "react";
 import Settings from "./components/settings";
+import {exportComponentAsPNG} from "react-component-export-image";
+
 const Container = styled.div`
     width: 100%;
     height: 100%;
@@ -26,17 +28,15 @@ const Text = styled.p`
 function Main() {
     const [MouseDown, setMouseDown] = useState(false);
     const [DrawingColor, setDrawingColor] = useState("black");
+    const boardRef = useRef()
     return(
         <Container onMouseDown={()=>setMouseDown(true)} onMouseUp={()=>setMouseDown(false)}>
             <div>
                 <Heading>Etch-a-Sketch</Heading>
-                <Text>
-                    Sketch something
-                </Text>
             </div>
             <Box>
-                <Board DrawingColor={DrawingColor} MouseDown={MouseDown}/>
-                <Settings setDrawingColor={setDrawingColor}>Balls</Settings>
+                <Board DrawingColor={DrawingColor} MouseDown={MouseDown} boardRef={boardRef}/>
+                <Settings DrawingColor={DrawingColor} setDrawingColor={setDrawingColor} boardRef={boardRef}>Balls</Settings>
             </Box>
         </Container>
     )

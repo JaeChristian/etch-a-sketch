@@ -12,39 +12,41 @@ const DrawBoard = styled.div`
 `;
 const GridItem = styled.div`
     user-select: none;
-    &:hover {
-        background: black;
-      }
+    
 `
 
 function Pixel({children, MouseDown, DrawingColor}) {
-    const GridItemDrawn = styled.div`
-        background: ${DrawingColor};
+    const [PixelColor, setPixelColor] = useState("white")
+    const GridItem = styled.div`
+        background: ${PixelColor};
         user-select: none;
+        &:hover {
+            background: ${DrawingColor};
+          }
     `
-    const [Drawn, setDrawn] = useState(false);
+    function draw() {
+        setPixelColor(DrawingColor);
+    }
     return(
-        <>
-        {
-            Drawn ? (<GridItemDrawn>{children}</GridItemDrawn>) : (<GridItem onMouseOver={()=>
-                {
-                    if(MouseDown===true){setDrawn(true)}
-                }
-            } onMouseDown={()=>setDrawn(true)}>
-                {children}
-            </GridItem>)
-        }
-        </>
-    )
+            <GridItem 
+                onMouseOver={()=>
+                    {
+                        if(MouseDown===true){draw()}
+                    }
+                } 
+                onMouseDown={()=>draw()}>
+                    {children}
+            </GridItem>
+            )
 }
 
-function Board({MouseDown, DrawingColor}) {
+function Board({MouseDown, DrawingColor, boardRef}) {
     const Grid = [];
     for(let i=0; i<(size * size); i++){
         Grid.push(i);
     }
     return(
-        <DrawBoard>
+        <DrawBoard ref={boardRef}>
             {Grid.map((gridItem)=> {
                 return(<Pixel key={gridItem} DrawingColor={DrawingColor} MouseDown={MouseDown}></Pixel>)
             })
