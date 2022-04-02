@@ -1,7 +1,7 @@
 {
   "name": "etch-a-sketch",
   "version": "0.1.0",
-  "homepage": "https://JaeChristian.github.io/react-gh-pages",
+  "homepage": "https://www.jeremiahortiz.ca/etch-a-sketch",
   "private": true,
   "dependencies": {
     "@emotion/styled": "^11.8.1",
